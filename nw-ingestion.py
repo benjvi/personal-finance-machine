@@ -10,7 +10,8 @@ with open(raw_csv_file) as f:
         transaction_rows.append(row)
 
 transaction_outputs=[]
-for line in transaction_rows:
+# remove header rows
+for line in transaction_rows[3:]:
     date = line[0].split('/')
     day = date[0]
     month = date[1]
@@ -21,7 +22,7 @@ for line in transaction_rows:
 
     transaction_outputs.append(new_tr)
 
-with open('formatted-transactions.csv', 'w+') as f:
+with open('nw-transactions.csv', 'w+') as f:
     wr = csv.writer(f)
     for t in transaction_outputs:
         wr.writerow(t)
