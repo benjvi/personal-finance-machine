@@ -8,7 +8,7 @@ amex_xls_file=sys.argv[1]
 
 with xlrd.open_workbook(amex_xls_file) as wb:
     sh = wb.sheet_by_index(0) 
-    with open('amex-transactions.csv', 'w', newline="") as f:
+    with open('cc-transactions.csv', 'w', newline="") as f:
         c = csv.writer(f)
         # first eleven lines are not relevant here
         # exclude column headers for import

@@ -22,7 +22,7 @@ for line in transaction_rows[3:]:
 
     transaction_outputs.append(new_tr)
 
-with open('nw-transactions.csv', 'w+') as f:
+with open('bank-transactions.csv', 'w+') as f:
     wr = csv.writer(f)
     for t in transaction_outputs:
         wr.writerow(t)

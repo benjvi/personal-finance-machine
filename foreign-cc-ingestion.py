@@ -14,7 +14,7 @@ with open(raw_csv_file) as f:
 for row in transaction_rows:
     row[0] = datetime.datetime.strptime(row[0], "%d %b %y").strftime('%Y-%m-%d')
 
-with open('barclaycard-transactions.csv', 'w', newline="") as f:
+with open('foreign-cc-transactions.csv', 'w', newline="") as f:
     wr = csv.writer(f)
     for t in transaction_rows:
         wr.writerow(t)

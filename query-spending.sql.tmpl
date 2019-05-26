@@ -1,0 +1,65 @@
+
+.print 'Spending from bank account by month'
+select strftime('%Y-%m', date),SUM(amount)
+    from nw_tx
+    where description not like '%${employer_tx_substring}%'
+    GROUP BY date(date, 'start of month')
+    ORDER BY date(date, 'start of month') DESC;
+
+.print 'Spending on regular credit by month'
+select strftime('%Y-%m', date),SUM(amount)
+    from cc_tx
+    GROUP BY date(date, 'start of month')
+    ORDER BY date(date, 'start of month') DESC;
+
+
+.print 'Spending on foreign credit by month'
+select strftime('%Y-%m', date),SUM(amount)
+    from fcc_tx
+    GROUP BY date(date, 'start of month')
+    ORDER BY date(date, 'start of month') DESC;
+
+.print 'Total income each month'
+select strftime('%Y-%m', date),SUM(amount)
+    from nw_tx
+    where amount > 0
+    and description like '%${employer_tx_substring}%'
+    GROUP BY date(date, 'start of month')
+    ORDER BY date(date, 'start of month') DESC;
+
+.print 'Expenses paid each month'
+select strftime('%Y-%m', date),SUM(amount)
+    from nw_tx
+    where amount > 0
+    and description like '%${employer_expenses_tx_substring}%'
+    GROUP BY date(date, 'start of month')
+    ORDER BY date(date, 'start of month') DESC;
+
+.print 'Total spending by month'
+select strftime('%Y-%m', date),SUM(amount)
+    from ( select date, amount, description from cc_tx
+            UNION
+            select date, amount, description from nw_tx 
+            UNION
+            select date, amount, description from fcc_tx )
+    where description not like '%${employer_tx_substring}%' 
+    GROUP BY date(date, 'start of month')
+    ORDER BY date(date, 'start of month') DESC;
+
+
+/* EXPLORATORY QUERIES */
+
+/*.print 'Income transactions by month'
+select date, amount, description
+    from ( select date, amount, description from cc_tx
+            UNION
+            select date, amount, description from nw_tx )
+    where amount > 0
+    ORDER BY date(date, 'start of month') DESC;*/
+/*
+get transactions in a given month
+
+select amount, description, date
+    from nw_tx
+    where  strftime('%Y-%m', date) = "2018-11"
+    ORDER BY date(date, 'start of month') DESC;*/

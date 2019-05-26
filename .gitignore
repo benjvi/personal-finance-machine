@@ -1,3 +1,5 @@
 *.db
 *.csv
 categorise.sql
+variables.yml
+query-spending.sql
